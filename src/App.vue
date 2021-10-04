@@ -31,7 +31,7 @@ export default {
   color: #2c3e50;
   /*background-color: #f6f6f6;*/
   background-image: linear-gradient(to bottom right, #8d39aa, #6646f1);
-  height: 100vh;
+  min-height: 100vh;
 }
 
 header {

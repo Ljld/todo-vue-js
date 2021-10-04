@@ -1,6 +1,6 @@
 <template>
     <div class="toDoItem">
-        <input type="text" :value="text"/>
+        <input type="text" :value="this.text"/>
         
         <div class="buttons">
             <button class="completed-button">
@@ -9,7 +9,7 @@
                     <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
             </button>
-            <button class="cancel-button">
+            <button @click="cancel" class="cancel-button">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"  stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     <path d="M15 9L9 15" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -24,12 +24,25 @@
 <script>
 
 export default {
-    data () {
-        return {
-            text: "Keep coding",
-            completed: false
+    props: {
+        id: Number,
+        text: String,
+        completed: Boolean
+    },
+    emits: ['cancel'],
+    methods: {
+        cancel: function () {
+            this.$emit('cancel', this.id);
         }
     }
+    /*,
+    data () {
+        return {
+            text: this.text,
+            completed: this.completedProp
+        }
+    }*/
+    
 }
 </script>
 
@@ -46,7 +59,7 @@ export default {
     input {
         background-color: transparent;
         outline: none;
-
+        width: 70%;
         border: none;
         border-bottom: 1px solid #ececec;
         padding: 0em 1em;
