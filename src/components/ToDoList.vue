@@ -3,7 +3,15 @@
     <button @click="newTodo">+</button>
     <div class="todos">
         <transition-group name="list" tag="div">
-                <ToDo v-for="(todo, index) in todos" :key="todo.id" :text="todo.text" @cancel="todos.splice(index, 1)" @updatedTask="todos[index].text = $event" />
+                <ToDo 
+                    v-for="(todo, index) in todos"
+                    :key="todo.id"
+                    :text="todo.text"
+                    :class="{completed: todo.completed}"
+                    @validate="todos[index].completed = true"
+                    @cancel="todos.splice(index, 1)"
+                    @updatedTask="todos[index].text = $event" 
+                />
         </transition-group>
     </div>
 </template>
@@ -66,11 +74,15 @@ export default {
         justify-content: center;
     }
 
+    .completed {
+        text-decoration: line-through;
+    }
+
     .list-enter-active, .list-leave-active {
         transition: opacity .5s;
     }
 
-    .list-enter-from, .list-leave-to /* .list-leave-active below version 2.1.8 */ {
+    .list-enter-from, .list-leave-to {
         opacity: 0;
     }
 
