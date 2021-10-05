@@ -1,64 +1,77 @@
 <template>
     <FilterMenu />
-    <button @click="newItem">+</button>
-    <div class="todo" v-for="item in items" v-bind:key="item.id">
-        <ToDoItem @cancel="deleteItem" v-bind="item" />
+    <button @click="newTodo">+</button>
+    <div class="todos">
+        <transition-group name="list" tag="div">
+                <ToDo v-for="(todo, index) in todos" :key="todo.id" :text="todo.text" @cancel="todos.splice(index, 1)" @updatedTask="todos[index].text = $event" />
+        </transition-group>
     </div>
-
 </template>
 
 <script>
-import ToDoItem from './ToDoItem.vue';
+import ToDo from './ToDo.vue';
 import FilterMenu from './FilterMenu.vue';
 
 export default {
   components: {
-    ToDoItem,
+    ToDo,
     FilterMenu
   },
   data () {
       return {
-          increment: 2,
-          items: [
-              {
-                id: 0,
-                text: "test",
-                completed: false
-              },
+          increment: 3,
+          todos: [
               {
                 id: 1,
-                text: "test 1",
+                text: "Do the laundry",
                 completed: false
               },
               {
                 id: 2,
-                text: "test 2",
+                text: "Water the plants",
+                completed: false
+              },
+              {
+                id: 3,
+                text: "Take over the world",
                 completed: false
               }
           ]
       }
   },
   methods: {
-      newItem: function () {
-          this.items.push({id: this.increment + 1,text: " ", completed: false});
+      newTodo () {
+          this.todos.push({id: this.increment + 1,text: " ", completed: false});
           this.increment++;
-      },
-      deleteItem: function (event) {
-          let index = this.items.findIndex(todo => todo.id == event);
-          this.items.splice(index, 1);
       }
-
   }
 }
 </script>
 
 <style scoped>
 
-    .toDoItem {
+    .todos {
+        display: flex;
+        justify-content: center;
+    }
+
+    .toDo {
+        background-color: #ececec;
+        border: none;
+        border-radius: 50px;
+        padding: 1em 2em;
         margin-bottom: 1em;
         width: 30em;
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
+    }
+
+    .list-enter-active, .list-leave-active {
+        transition: opacity .5s;
+    }
+
+    .list-enter-from, .list-leave-to /* .list-leave-active below version 2.1.8 */ {
+        opacity: 0;
     }
 
     button {
@@ -69,7 +82,6 @@ export default {
         border-radius: 50%;
         background-color: transparent;
         transition: 150ms all linear;
-
         margin-bottom: 1em;
     }
 
