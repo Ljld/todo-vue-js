@@ -37,11 +37,11 @@ export default {
     input {
         background-color: transparent;
         outline: none;
-        width: 70%;
         border: none;
         border-bottom: 1px solid #ececec;
         padding: 0em 1em;
         transition: 200ms border-bottom linear;
+        flex-grow: 4;
     }
 
     input:focus {
@@ -66,6 +66,7 @@ export default {
         border: none;
         background-color: transparent;
         transition: 150ms all linear;
+        flex-grow: 1;
     }
 
     button:hover {
