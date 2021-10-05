@@ -1,33 +1,42 @@
 <template>
-    <FilterMenu />
+    
+    <div class="filter-menu">
+        <nav>
+            <h2 @click="filter = 'all'" :class="{active: filter == 'all'}">All</h2>
+            <h2 @click="filter = 'to-do'" :class="{active: filter == 'to-do'}">To Do</h2>
+            <h2 @click="filter = 'done'" :class="{active: filter == 'done'}">Done</h2>
+        </nav>
+    </div>
+
     <button @click="newTodo">+</button>
     <div class="todos">
         <transition-group name="list" tag="div">
-                <ToDo 
-                    v-for="(todo, index) in todos"
-                    :key="todo.id"
+            <div v-for="(todo, index) in todos" :key="todo.id">
+                <ToDo
+                    v-if="filter == 'all' || (filter == 'to-do' && !todo.completed) || (filter == 'done' && todo.completed)"
                     :text="todo.text"
                     :class="{completed: todo.completed}"
                     @validate="todos[index].completed = true"
                     @cancel="todos.splice(index, 1)"
                     @updatedTask="todos[index].text = $event" 
                 />
+            </div>
+                
         </transition-group>
     </div>
 </template>
 
 <script>
 import ToDo from './ToDo.vue';
-import FilterMenu from './FilterMenu.vue';
 
 export default {
   components: {
-    ToDo,
-    FilterMenu
+    ToDo
   },
   data () {
       return {
           increment: 3,
+          filter: 'to-do',
           todos: [
               {
                 id: 1,
@@ -37,7 +46,7 @@ export default {
               {
                 id: 2,
                 text: "Water the plants",
-                completed: false
+                completed: true
               },
               {
                 id: 3,
@@ -99,6 +108,27 @@ export default {
 
     button:hover {
         border: 4px solid white;
+    }
+
+    .filter-menu {
+        width: 20em;
+        margin: auto;
+    }
+
+    h2 {
+        border-bottom: 1px solid #2c3e50;
+        padding: 0 1em;
+        margin-bottom: 1em;
+    }
+
+    .active {
+        color: white;
+        border-bottom: 1px solid white;
+    }
+
+    nav {
+        display: flex;
+        justify-content: center;
     }
 
 </style>
