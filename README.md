@@ -1,5 +1,11 @@
 # todo-vue-js
 
+A simple Todo List project using VueJS 3 
+
+### Screenshot
+
+![](/src/assets/screenshot.png)
+
 ## Project setup
 ```
 yarn install
